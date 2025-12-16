@@ -1,0 +1,75 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Zadanie 1
+      id: zadanie-1
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Zadanie 1
+        setup-command: mkdir -p build && cd build && cmake .. && cmake --build . --target
+          zad1 && chmod +x zad1
+        command: cd build && ./zad1
+        timeout: 10
+        max-score: 7
+    - name: Zadanie 2
+      id: zadanie-2
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Zadanie 2
+        setup-command: mkdir -p build && cd build && cmake .. && cmake --build . --target
+          zad2 && chmod +x zad2
+        command: cd build && ./zad2
+        timeout: 10
+        max-score: 7
+    - name: Zadanie 3
+      id: zadanie-3
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Zadanie 3
+        setup-command: mkdir -p build && cd build && cmake .. && cmake --build . --target
+          zad3 && chmod +x zad3
+        command: cd build && ./zad3
+        timeout: 10
+        max-score: 7
+    - name: Zadanie 4
+      id: zadanie-4
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Zadanie 4
+        setup-command: mkdir -p build && cd build && cmake .. && cmake --build . --target
+          zad4 && chmod +x zad4
+        command: cd build && ./zad4
+        timeout: 10
+        max-score: 7
+    - name: Zadanie 5
+      id: zadanie-5
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Zadanie 5
+        setup-command: mkdir -p build && cd build && cmake .. && cmake --build . --target
+          zad5 && chmod +x zad5
+        command: cd build && ./zad5
+        timeout: 10
+        max-score: 7
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        ZADANIE-1_RESULTS: "${{steps.zadanie-1.outputs.result}}"
+        ZADANIE-2_RESULTS: "${{steps.zadanie-2.outputs.result}}"
+        ZADANIE-3_RESULTS: "${{steps.zadanie-3.outputs.result}}"
+        ZADANIE-4_RESULTS: "${{steps.zadanie-4.outputs.result}}"
+        ZADANIE-5_RESULTS: "${{steps.zadanie-5.outputs.result}}"
+      with:
+        runners: zadanie-1,zadanie-2,zadanie-3,zadanie-4,zadanie-5
