@@ -11,20 +11,8 @@ public:
     virtual ~Makaron() = default;
 
     virtual double ileMaki(unsigned P) const { return 0; }
-    Makaron static gotujMakaron(const std::string& s) 
-    { 
-        Makaron* m;
-        if (s.front() == s.back())
-        {
-            m = new Tagliatelle(3.14, 0.42, 0.1);
-        }
-        else
-        {
-            m = new Penne();
-        }
-        return *m; 
-    }
-
+    
+    static Makaron* gotujMakaron(const std::string& s);
     
 };
 
@@ -54,3 +42,17 @@ public:
 
     double ileMaki(unsigned P) const override { return (double)P; }
 };
+
+Makaron* Makaron::gotujMakaron(const std::string& s)
+{
+    Makaron* m;
+    if (s.front() == s.back())
+    {
+        m = new Tagliatelle(3.14, 0.42, 0.1);
+    }
+    else
+    {
+        m = new Penne();
+    }
+    return m;
+}
